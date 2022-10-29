@@ -133,13 +133,15 @@ public:
     //сравнение
     bool operator==(const TDynamicVector& v) const noexcept
     {
-         if (sz != v.sz)
-             return false;
-         for (size_t count = 0; count < sz; count++) {
-             if (pMem[count] != v.pMem[count])
-                 return false;
-         }
-         return true;
+        //if (*this == &v)
+        //    return true;
+        if (sz != v.sz)
+            return false;
+        for (size_t count = 0; count < sz; count++) {
+            if (pMem[count] != v.pMem[count])
+                return false;
+        }
+        return true;
     }
     bool operator!=(const TDynamicVector& v) const noexcept
     {
@@ -243,7 +245,14 @@ public:
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
-      return TDynamicVector<TDynamicVector<T>>::operator==(m);
+      return TDynamicVector<TDynamicVector<T>>::operator==(m); //такую штуку разбирали на паре по АиСДу
+      //if (sz != m.sz)
+      //    return false;
+      //for (int count = 0; count < sz; count++) {
+      //    if (pMem[count] != m.pMem[count])
+      //        return false;
+      //}
+      //return true;
   }
   bool operator!=(const TDynamicMatrix& m) const noexcept
   {
@@ -300,17 +309,23 @@ public:
                   tmp.pMem[i][j] += pMem[i][k] * m.pMem[k][j];
       return tmp;
   }
-  
+  size_t size() const noexcept {
+      return TDynamicVector<TDynamicVector<T>>::size();//не уверен, что работает, но такой код отобразил 10
+      /*
+          TDynamicMatrix<int> m1(10);
+	      std::cout << m1.size() << std::endl;
+      */
+  }
   // ввод/вывод
   friend istream& operator>>(istream& istr, TDynamicMatrix& v){
       for (size_t count = 0; count < v.sz; count++) {
-          cin >> v.pMem[count];
+          istr >> v.pMem[count];
       }
       return istr;
   }
   friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v) {
       for (int count = 0; count < v.sz; count++)
-          out << v.pMem[count] << "\t";
+          ostr << v.pMem[count] << "\t";
       return ostr;
   }
 };
