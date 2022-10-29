@@ -230,8 +230,12 @@ class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
 public:
   TDynamicMatrix(size_t s = 1) : TDynamicVector<TDynamicVector<T>>(s)
   {
-    for (size_t i = 0; i < sz; i++)
-      pMem[i] = TDynamicVector<T>(sz);
+      if (s <= 0)
+          throw "ERROR: MATRIX SIZE SHOULD BE GREATER THAN ZERO";
+      if (s > MAX_MATRIX_SIZE)
+          throw "ERROR: TO MUCH SIZE OF MATRIX. MAX SIZE IS 10000";
+      for (size_t i = 0; i < sz; i++)
+        pMem[i] = TDynamicVector<T>(sz);
   }
 
   using TDynamicVector<TDynamicVector<T>>::operator[];
@@ -239,35 +243,75 @@ public:
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
+      return TDynamicVector<TDynamicVector<T>>::operator==(m);
+  }
+  bool operator!=(const TDynamicMatrix& m) const noexcept
+  {
+      return !(m == *this);
   }
   
   // матрично-скалярные операции
   TDynamicVector<T> operator*(const T& val)
   {
+      TDynamicMatrix tmp(sz);
+      for (size_t count = 0; count < sz; count++) {
+          tmp.pMem[count] = pMem[count] * val;
+      }
+      return tmp;
   }
   
   // матрично-векторные операции
   TDynamicVector<T> operator*(const TDynamicVector<T>& v)
   {
+      TDynamicMatrix tmp(sz);
+      for (size_t count = 0; count < sz; count++)
+          tmp.pMem[count] = pMem[count] * v;
+      return tmp;
   }
   
   // матрично-матричные операции
   TDynamicMatrix operator+(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw "ERROR: Addition of different sizes of matrices is not allowed";
+      TDynamicMatrix tmp(sz);
+      for (size_t count = 0; count < sz; count++)
+          tmp.pMem[count] = pMem[count] + m.pMem[count];
+      return tmp;
   }
   TDynamicMatrix operator-(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw "ERROR: Subtraction of different matrix sizes is not allowed";
+
+      TDynamicMatrix tmp(sz);
+      for (size_t count = 0; count < sz; count++)
+          tmp.pMem[count] = pMem[count] - m.pMem[count];
+      return tmp;
   }
   TDynamicMatrix operator*(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw "ERROR: Multiplication of different sizes of matrices is not allowed";
+      TDynamicMatrix tmp(sz);
+      for (size_t i = 0; i < sz; i++)
+          for (size_t k = 0; k < sz; k++)
+              for (size_t j = 0; j < sz; j++)
+                  tmp.pMem[i][j] += pMem[i][k] * m.pMem[k][j];
+      return tmp;
   }
   
   // ввод/вывод
-  friend istream& operator>>(istream& istr, TDynamicMatrix& v)
-  {
+  friend istream& operator>>(istream& istr, TDynamicMatrix& v){
+      for (size_t count = 0; count < v.sz; count++) {
+          cin >> v.pMem[count];
+      }
+      return istr;
   }
-  friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v)
-  {
+  friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v) {
+      for (int count = 0; count < v.sz; count++)
+          out << v.pMem[count] << "\t";
+      return ostr;
   }
 };
 
