@@ -151,14 +151,14 @@ public:
     {
         TDynamicVector tmp(sz);
         for (size_t count = 0; count < sz; count++)
-            tmp.pMem[count] += val;
+            tmp.pMem[count] = pMem[count] + val;
         return tmp;
     }
     TDynamicVector operator-(double val)
     {
         TDynamicVector tmp(sz);
         for (size_t count = 0; count < sz; count++)
-            tmp.pMem[count] -= val;
+            tmp.pMem[count] = pMem[count] - val;
         return tmp;
     }
     TDynamicVector operator*(double val)
