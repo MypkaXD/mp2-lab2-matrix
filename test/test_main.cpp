@@ -3,8 +3,8 @@
 
 int main(int argc, char **argv)
 {
-    //::testing::InitGoogleTest(&argc, argv);
-    //return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
 
 	//TDynamicMatrix<int> m1(10);
