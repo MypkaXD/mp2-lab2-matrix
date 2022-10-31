@@ -8,6 +8,8 @@ int main(int argc, char **argv)
 
 
 	//TDynamicMatrix<int> m1(10);
+	//std::cout << m1 << std::endl;
+	//std::cout << m1 + 10 << std::endl;
 	//std::cout << m1.size() << std::endl;
 	//return 0;
 }

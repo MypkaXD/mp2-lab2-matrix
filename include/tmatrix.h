@@ -162,7 +162,7 @@ public:
 
         return tmp;
     }
-    TDynamicVector operator-(double val)
+    TDynamicVector operator-(T val)
     {
         TDynamicVector tmp(sz);
 
@@ -171,7 +171,7 @@ public:
 
         return tmp;
     }
-    TDynamicVector operator*(double val)
+    TDynamicVector operator*(T val)
     {
         TDynamicVector tmp(sz);
 
@@ -349,15 +349,15 @@ public:
         */
     }
     // ввод/вывод
-    friend istream& operator>>(istream& istr, TDynamicMatrix& v){
-        for (size_t count = 0; count < v.sz; count++)
-            istr >> v.pMem[count] << "\t";
+    friend istream& operator>>(istream& istr, TDynamicMatrix& m){
+        for (size_t count = 0; count < m.sz; count++)
+            istr >> m.pMem[count] << "\t";
     
         return istr;
     }
-    friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& v) {
-        for (int count = 0; count < v.sz; count++)
-            ostr << v.pMem[count] << "\t";
+    friend ostream& operator<<(ostream& ostr, const TDynamicMatrix& m) {
+        for (int count = 0; count < m.sz; count++)
+            ostr << m.pMem[count] << "\t";
     
         return ostr;
     }
