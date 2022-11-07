@@ -269,3 +269,60 @@ TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 	ASSERT_ANY_THROW(v1 * v2);
 }
 
+TEST(TDynamicVector, can_create_vector_with_move_semantics)
+{
+	TDynamicVector<int> v1;
+
+	ASSERT_NO_THROW(TDynamicVector<int> v2 = std::move(v1));
+}
+
+
+TEST(TDynamicVector, move_semantics_vector_is_equal_to_source_one)
+{
+	TDynamicVector<int>v1(3);
+	TDynamicVector<int>v2(v1);
+	TDynamicVector<int>v3 = std::move(v1);
+
+	EXPECT_EQ(v2, v3);
+}
+
+TEST(TDynamicVector, move_semantics_copied_vector_has_its_own_memory)
+{
+	TDynamicVector<int>v1(3);
+	TDynamicVector<int>v2 = std::move(v1);
+
+	EXPECT_NE(&v1[0], &v2[0]);
+}
+
+
+TEST(TDynamicVector, can_move_vectors_of_equal_size)
+{
+	const int size = 3;
+
+	TDynamicVector<int> v1(size);
+	TDynamicVector<int> v2(v1);
+	TDynamicVector<int> v3 = std::move(v1);
+
+	EXPECT_EQ(v2.size(), v3.size());
+}
+
+TEST(TDynamicVector, move_semantics_operator_change_vector_size)
+{
+	TDynamicVector<int> v1(3);
+	TDynamicVector<int> v2(4);
+
+	v2 = std::move(v1);
+
+	EXPECT_EQ(3, v2.size());
+}
+
+TEST(TDynamicVector, can_move_vectors_of_different_size)
+{
+	TDynamicVector<int> v1(3);
+	TDynamicVector<int> v2(4);
+	TDynamicVector<int> v3(v2);
+
+	v1 = std::move(v2);
+
+	EXPECT_EQ(v1, v3);
+}

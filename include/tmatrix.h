@@ -50,6 +50,7 @@ public:
     }
     TDynamicVector(TDynamicVector&& v) noexcept
     {
+        sz = 0;
         pMem = nullptr;
         swap(*this, v);
     }
