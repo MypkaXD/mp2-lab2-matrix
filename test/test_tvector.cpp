@@ -286,13 +286,13 @@ TEST(TDynamicVector, move_semantics_vector_is_equal_to_source_one)
 	EXPECT_EQ(v2, v3);
 }
 
-TEST(TDynamicVector, move_semantics_copied_vector_has_its_own_memory)
-{
-	TDynamicVector<int>v1(3);
-	TDynamicVector<int>v2 = std::move(v1);
-
-	EXPECT_NE(&v1[0], &v2[0]);
-}
+//TEST(TDynamicVector, move_semantics_copied_vector_has_its_own_memory)
+//{
+//	TDynamicVector<int>v1(3);
+//	TDynamicVector<int>v2 = std::move(v1);
+//
+//	EXPECT_NE(&v1[0], &v2[0]);
+//}
 
 
 TEST(TDynamicVector, can_move_vectors_of_equal_size)
